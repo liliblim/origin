@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "homeworklili2.1", "homeworklili2.1\homeworklili2.1.vcxproj", "{E589F27A-0404-49B9-94D7-1A3B121ADF27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Debug|x64.ActiveCfg = Debug|x64
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Debug|x64.Build.0 = Debug|x64
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Debug|x86.ActiveCfg = Debug|Win32
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Debug|x86.Build.0 = Debug|Win32
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Release|x64.ActiveCfg = Release|x64
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Release|x64.Build.0 = Release|x64
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Release|x86.ActiveCfg = Release|Win32
+		{E589F27A-0404-49B9-94D7-1A3B121ADF27}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0081EA4-2898-4D2B-B1EB-1F79D0DF4816}
+	EndGlobalSection
+EndGlobal

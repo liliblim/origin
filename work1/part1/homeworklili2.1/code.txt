@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+
+int main() {
+    std::ifstream inputFile("in.txt");
+    std::ofstream outputFile("out.txt");
+
+    if (inputFile.is_open() && outputFile.is_open()) {
+        int n, m;
+        inputFile >> n;
+
+        int* arrayN = new int[n];
+        for (int i = 0; i < n; ++i) {
+            inputFile >> arrayN[i];
+        }
+
+        inputFile >> m;
+
+        int* arrayM = new int[m];
+        for (int i = 0; i < m; ++i) {
+            inputFile >> arrayM[i];
+        }
+
+     
+        int firstElementN = arrayN[0];
+        for (int i = 0; i < n - 1; ++i) {
+            arrayN[i] = arrayN[i + 1];
+        }
+        arrayN[n - 1] = firstElementN;
+
+     
+        int lastElementM = arrayM[m - 1];
+        for (int i = m - 1; i > 0; --i) {
+            arrayM[i] = arrayM[i - 1];
+        }
+        arrayM[0] = lastElementM;
+
+        outputFile << m << "\n";
+        for (int i = m - 1; i >= 0; --i) {
+            outputFile << arrayM[i] << " ";
+        }
+
+        outputFile << "\n" << n << "\n";
+        for (int i = 0; i < n - 1; ++i) {
+            outputFile << arrayN[i] << " ";
+        }
+        outputFile << arrayN[n - 1];
+
+        delete[] arrayN;
+        delete[] arrayM;
+
+        inputFile.close();
+        outputFile.close();
+    }
+    else {
+        std::cout << "Miskate";
+    }
+
+    return 0;
+}
