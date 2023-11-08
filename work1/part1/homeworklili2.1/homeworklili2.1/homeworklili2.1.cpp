@@ -1,63 +1,50 @@
 ﻿// homeworklili2.1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
 #include <iostream>
 #include <fstream>
 
 int main() {
-    std::ifstream inputFile("in.txt");
-    std::ofstream outputFile("out.txt");
+    std::ifstream inFile("in.txt");
 
-    if (inputFile.is_open() && outputFile.is_open()) {
-        int n, m;
-        inputFile >> n;
+    int N, M;
+    inFile >> N;
 
-        int* arrayN = new int[n];
-        for (int i = 0; i < n; ++i) {
-            inputFile >> arrayN[i];
-        }
-
-        inputFile >> m;
-
-        int* arrayM = new int[m];
-        for (int i = 0; i < m; ++i) {
-            inputFile >> arrayM[i];
-        }
-
-     
-        int firstElementN = arrayN[0];
-        for (int i = 0; i < n - 1; ++i) {
-            arrayN[i] = arrayN[i + 1];
-        }
-        arrayN[n - 1] = firstElementN;
-
-     
-        int lastElementM = arrayM[m - 1];
-        for (int i = m - 1; i > 0; --i) {
-            arrayM[i] = arrayM[i - 1];
-        }
-        arrayM[0] = lastElementM;
-
-        outputFile << m << "\n";
-        for (int i = m - 1; i >= 0; --i) {
-            outputFile << arrayM[i] << " ";
-        }
-
-        outputFile << "\n" << n << "\n";
-        for (int i = 0; i < n - 1; ++i) {
-            outputFile << arrayN[i] << " ";
-        }
-        outputFile << arrayN[n - 1];
-
-        delete[] arrayN;
-        delete[] arrayM;
-
-        inputFile.close();
-        outputFile.close();
+    int* arrayN = new int[N];
+    for (int i = 0; i < N; ++i) {
+        inFile >> arrayN[i];
     }
-    else {
-        std::cout << "Miskate";
+
+    inFile >> M;
+
+    int* arrayM = new int[M];
+    for (int i = 0; i < M; ++i) {
+        inFile >> arrayM[i];
     }
+
+    inFile.close();
+
+    std::ofstream outFile("out.txt");
+
+    outFile << M << std::endl;
+    for (int i = 0; i < M; ++i) {
+        if (i != M - 1) {
+            outFile << arrayM[i + 1] << " ";
+        }
+        else {
+            outFile << arrayM[0];
+        }
+    }
+    outFile << std::endl;
+
+    outFile << N << std::endl;
+    for (int i = 0; i < N - 1; ++i) {
+        outFile << arrayN[i + 1] << " ";
+    }
+    outFile << arrayN[0];
+
+    outFile.close();
+
+    delete[] arrayN;
+    delete[] arrayM;
 
     return 0;
 }
