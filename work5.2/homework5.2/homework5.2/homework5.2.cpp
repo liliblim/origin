@@ -1,114 +1,113 @@
 ﻿#include <iostream>
 #include <cmath>
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846264338327950288
-#endif
-
-
 class Figure {
+protected:
+    std::string name;
+
 public:
-    virtual void print_info() const = 0;
+    Figure(const std::string& figureName) : name(figureName) {}
+
+    virtual void print_info() const {
+        std::cout << name << ":" << std::endl;
+        std::cout << "Стороны: ";
+    }
 };
 
 class Triangle : public Figure {
 protected:
     double a, b, c;  // Стороны треугольника
-    double A, B, C;  // Углы треугольника
 
 public:
-    Triangle(double side_a, double side_b, double side_c, double angle_A, double angle_B, double angle_C)
-        : a(side_a), b(side_b), c(side_c), A(angle_A), B(angle_B), C(angle_C) {
-        if (a <= 0 || b <= 0 || c <= 0 || A <= 0 || B <= 0 || C <= 0 || A + B + C != 180) {
-            throw std::invalid_argument("Invalid triangle parameters");
-        }
-    }
+    Triangle(const std::string& figureName, double side_a, double side_b, double side_c)
+        : Figure(figureName), a(side_a), b(side_b), c(side_c) {}
 
     void print_info() const override {
-        std::cout << "Треугольник:" << std::endl;
-        std::cout << "Стороны: a=" << a << " b=" << b << " c=" << c << std::endl;
-        std::cout << "Углы: A=" << A << " B=" << B << " C=" << C << std::endl;
+        Figure::print_info();
+        std::cout << "a=" << a << " b=" << b << " c=" << c << std::endl;
     }
 };
 
 class RightTriangle : public Triangle {
 public:
     RightTriangle(double base, double legs)
-        : Triangle(base, legs, sqrt(base* base + legs * legs), acos(base / sqrt(base * base + legs * legs)) * 180.0 / M_PI,
-            acos(legs / sqrt(base * base + legs * legs)) * 180.0 / M_PI, 90) {}
-
-    void print_info() const override {
-        std::cout << "Прямоугольный треугольник:" << std::endl;
-        std::cout << "Стороны: a=" << a << " b=" << b << " c=" << c << std::endl;
-        std::cout << "Углы: A=" << A << " B=" << B << " C=" << C << std::endl;
-    }
+        : Triangle("Прямоугольный треугольник", base, legs, sqrt(base* base + legs * legs)) {}
 };
 
 class IsoscelesTriangle : public Triangle {
 public:
     IsoscelesTriangle(double base, double legs, double angle_C)
-        : Triangle(base, legs, legs, asin(legs* sin(angle_C* M_PI / 180.0) / base) * 180.0 / M_PI, 180 - angle_C, angle_C) {}
-
-    void print_info() const override {
-        std::cout << "Равнобедренный треугольник:" << std::endl;
-        std::cout << "Стороны: a=" << a << " b=" << b << " c=" << c << std::endl;
-        std::cout << "Углы: A=" << A << " B=" << B << " C=" << C << std::endl;
-    }
+        : Triangle("Равнобедренный треугольник", base, legs, legs) {}
 };
 
 class EquilateralTriangle : public Triangle {
 public:
     EquilateralTriangle(double side)
-        : Triangle(side, side, side, 60, 60, 60) {}
-
-    void print_info() const override {
-        std::cout << "Равносторонний треугольник:" << std::endl;
-        std::cout << "Стороны: a=" << a << " b=" << b << " c=" << c << std::endl;
-        std::cout << "Углы: A=" << A << " B=" << B << " C=" << C << std::endl;
-    }
+        : Triangle("Равносторонний треугольник", side, side, side) {}
 };
 
 class Quadrangle : public Figure {
 protected:
     double a, b, c, d;  // Стороны четырёхугольника
-    double A, B, C, D;  // Углы четырёхугольника
 
 public:
-    Quadrangle(double side_a, double side_b, double side_c, double side_d)
-        : a(side_a), b(side_b), c(side_c), d(side_d), A(0), B(0), C(0), D(0) {
-        if (a <= 0 || b <= 0 || c <= 0 || d <= 0 || A + B + C + D != 360) {
-            throw std::invalid_argument("Invalid quadrangle parameters");
-        }
-    }
+    Quadrangle(const std::string& figureName, double side_a, double side_b, double side_c, double side_d)
+        : Figure(figureName), a(side_a), b(side_b), c(side_c), d(side_d) {}
 
     void print_info() const override {
-        std::cout << "Четырёхугольник:" << std::endl;
-        std::cout << "Стороны: a=" << a << " b=" << b << " c=" << c << " d=" << d << std::endl;
-        std::cout << "Углы: A=" << A << " B=" << B << " C=" << C << " D=" << D << std::endl;
+        Figure::print_info();
+        std::cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << std::endl;
     }
 };
 
-// Добавьте оставшиеся классы для прямоугольника, квадрата, параллелограмма, ромба
+class Rectangle : public Quadrangle {
+public:
+    Rectangle(double side_a, double side_b)
+        : Quadrangle("Прямоугольник", side_a, side_b, side_a, side_b) {}
+};
+
+class Square : public Rectangle, public EquilateralTriangle {
+public:
+    Square(double side)
+        : Rectangle(side, side), EquilateralTriangle(side) {}
+
+    void print_info() const override {
+        Rectangle::print_info();
+    }
+};
+
+class Parallelogram : public Quadrangle {
+public:
+    Parallelogram(double side_a, double side_b, double angle)
+        : Quadrangle("Параллелограмм", side_a, side_b, side_a, side_b) {}
+};
+
+class Rhombus : public Parallelogram {
+public:
+    Rhombus(double side, double angle)
+        : Parallelogram(side, side, angle) {}
+};
 
 int main() {
-    try {
-        Triangle triangle(10, 20, 30, 50, 60, 70);
-        RightTriangle right_triangle(10, 20);
-        IsoscelesTriangle isosceles_triangle(10, 20, 50);
-        EquilateralTriangle equilateral_triangle(30);
+    Triangle triangle("Треугольник", 10, 20, 30);
+    RightTriangle rightTriangle(10, 20);
+    IsoscelesTriangle isoscelesTriangle(10, 20, 50);
+    EquilateralTriangle equilateralTriangle(30);
+    Quadrangle quadrangle("Четырёхугольник", 10, 20, 30, 40);
+    Rectangle rectangle(10, 20);
+    Square square(20);
+    Parallelogram parallelogram(20, 30, 40);
+    Rhombus rhombus(30, 40);
 
-        triangle.print_info();
-        right_triangle.print_info();
-        isosceles_triangle.print_info();
-        equilateral_triangle.print_info();
-
-        Quadrangle quadrangle(10, 20, 30, 40);
-        // Создайте объекты оставшихся классов и выведите информацию о них
-
-    }
-    catch (const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
+    triangle.print_info();
+    rightTriangle.print_info();
+    isoscelesTriangle.print_info();
+    equilateralTriangle.print_info();
+    quadrangle.print_info();
+    rectangle.print_info();
+    square.print_info();
+    parallelogram.print_info();
+    rhombus.print_info();
 
     return 0;
 }
