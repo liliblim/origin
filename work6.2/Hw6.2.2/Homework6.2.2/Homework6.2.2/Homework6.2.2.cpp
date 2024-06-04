@@ -31,22 +31,17 @@ smart_array& smart_array::operator=(const smart_array& other) {
 }
 
 void smart_array::add_element(int element) {
-    if (size < capacity) {
-        data[size++] = element;
-    }
-    else {
-        std::cerr << "Array capacity exceeded" << std::endl;
-    }
+if (size >= capacity) {
+throw std::overflow_error("Array capacity exceeded");
+}
+data[size++] = element;
 }
 
-int smart_array::get_element(size_t index) const {
-    if (index < size) {
-        return data[index];
-    }
-    else {
-        std::cerr << "Index out of range" << std::endl;
-        return -1;
-    }
+int smart_array::get_element(size_t index) const 
+{ 
+    if (index >= size) 
+{ throw std::out_of_range("Index out of range"); } 
+return data[index]; 
 }
 
 size_t smart_array::get_size() const {
